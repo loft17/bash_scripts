@@ -43,8 +43,8 @@ PATH_HTTP=/srv/http                         # caperta http
 PATH_BCK=/root/backups
 
 # Variables password
-PASS7ZP="XXXXXXXXXX"
-SQLPASS="XXXXXXXXXX"
+PASS7ZP="-_v8m1vAW7rsEUZK6vAX"
+SQLPASS="0AgEkw@TBP.2Aj(K^5"
 SQLUSER="root"
 
 
@@ -76,7 +76,7 @@ backupfolderwebs(){
     FOLDERSWEBS=`ls $PATH_HTTP | grep -v /`;
     for FOLDERWEB in ${FOLDERSWEBS}; do
         mkdir -p $PATH_TMP/server_$DATE/$FOLDERWEB
-        cp -R $PATH_HTTP/$FOLDERWEB/public_html $PATH_TMP/server_$DATE 2> /dev/null
+        cp -R $PATH_HTTP/$FOLDERWEB/public_html $PATH_TMP/server_$DATE/$FOLDERWEB 2> /dev/null
         cp -R $PATH_HTTP/$FOLDERWEB/ssl $PATH_TMP/server_$DATE/$FOLDERWEB 2> /dev/null
     done
 }

